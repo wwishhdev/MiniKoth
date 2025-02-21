@@ -16,6 +16,11 @@ messages:
   koth-started: "&bThe KOTH {name} has started!"
   koth-ended: "&bThe KOTH {name} has ended!"
   chest-spawned: "&aA reward chest has spawned at the KOTH!"
+  help-header: "&8=== &bMiniKOTH Help &8==="
+  help-format: "&b/{command} &7- {description}"
+  help-footer: "&8=========================="
+  no-permission: "&cYou don't have permission to use this command!"
+  command-error: "&cAn error occurred while executing the command."
 
 rewards:
   commands:

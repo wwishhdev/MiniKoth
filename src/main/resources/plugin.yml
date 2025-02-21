@@ -4,8 +4,46 @@ main: com.wish.MiniKOTH
 author: wwishh
 description: A simple MiniKOTH plugin with chest rewards
 depend: [WorldEdit, WorldGuard]
+
 commands:
   minikoth:
     description: Main command for MiniKOTH plugin
     aliases: [mkoth]
     usage: /<command> [subcommand]
+
+permissions:
+  minikoth.*:
+    description: Gives access to all MiniKOTH commands
+    children:
+      minikoth.create: true
+      minikoth.delete: true
+      minikoth.setspawn: true
+      minikoth.reward: true
+      minikoth.schedule: true
+      minikoth.start: true
+      minikoth.stop: true
+      minikoth.reload: true
+  minikoth.create:
+    description: Allows creating new KOTHs
+    default: op
+  minikoth.delete:
+    description: Allows deleting KOTHs
+    default: op
+  minikoth.setspawn:
+    description: Allows setting chest spawn locations
+    default: op
+  minikoth.reward:
+    description: Allows managing rewards
+    default: op
+  minikoth.schedule:
+    description: Allows managing schedules
+    default: op
+  minikoth.start:
+    description: Allows starting KOTHs
+    default: op
+  minikoth.stop:
+    description: Allows stopping KOTHs
+    default: op
+  minikoth.reload:
+    description: Allows reloading the plugin
+    default: op
