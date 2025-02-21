@@ -52,6 +52,34 @@ public class ChestReward {
     }
 
     /**
+     * Gets a random reward based on tier chances and then item chances within that tier
+     */
+    public static ItemStack getRandomReward(List<ChestReward> rewards) {
+        // First, select a tier based on tier chances
+        int totalTierChance = rewards.stream().mapToInt(ChestReward::getChance).sum();
+        int random = new Random().nextInt(totalTierChance);
+        int currentSum = 0;
+
+        // Find selected tier
+        ChestReward selectedTier = null;
+        for (ChestReward tier : rewards) {
+            currentSum += tier.getChance();
+            if (random < currentSum) {
+                selectedTier = tier;
+                break;
+            }
+        }
+
+        // If no tier was selected (shouldn't happen), use first tier
+        if (selectedTier == null) {
+            selectedTier = rewards.get(0);
+        }
+
+        // Now get a random item from the selected tier
+        return selectedTier.getRandomItem();
+    }
+
+    /**
      * Loads a chest reward from configuration
      */
     public static ChestReward fromConfig(String tier, ConfigurationSection section) {

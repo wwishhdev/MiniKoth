@@ -1,7 +1,10 @@
 package com.wish.managers;
 
 import com.wish.MiniKOTH;
+import com.wish.listeners.ChestListener;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
 /**
@@ -14,6 +17,7 @@ import org.bukkit.entity.Player;
  */
 public class RewardManager {
     private final MiniKOTH plugin;
+    private final ChestListener chestListener;
 
     /**
      * Constructor for RewardManager
@@ -21,6 +25,8 @@ public class RewardManager {
      */
     public RewardManager(MiniKOTH plugin) {
         this.plugin = plugin;
+        this.chestListener = new ChestListener(plugin);
+        plugin.getServer().getPluginManager().registerEvents(chestListener, plugin);
     }
 
     /**
@@ -48,8 +54,27 @@ public class RewardManager {
      * @param player Player who won the KOTH
      */
     private void spawnRewardChest(Player player) {
-        // This will be implemented when we create the ChestManager
-        // For now, just notify the player
+        KOTH koth = null;
+
+        // Buscar el KOTH que el jugador capturó
+        for (KOTH k : plugin.getKothManager().getKOTHs().values()) {
+            if (player.getName().equals(k.getCurrentCapturer())) {
+                koth = k;
+                break;
+            }
+        }
+
+        if (koth == null) return;
+
+        // Obtener la ubicación del cofre
+        Location chestLoc = koth.getChestSpawnLocation();
+        if (chestLoc == null) return;
+
+        // Crear el cofre
+        Block block = chestLoc.getBlock();
+        chestListener.createKOTHChest(block, player.getName());
+
+        // Notificar al jugador
         player.sendMessage(plugin.getConfigManager().getMessage("chest-spawned"));
     }
 

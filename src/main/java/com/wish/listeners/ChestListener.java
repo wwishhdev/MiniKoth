@@ -1,9 +1,11 @@
 package com.wish.listeners;
 
 import com.wish.MiniKOTH;
+import com.wish.utils.ChestReward;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -11,7 +13,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 /**
  * ChestListener
@@ -103,9 +111,35 @@ public class ChestListener implements Listener {
      * @param chest Chest to fill with rewards
      */
     private void fillChestWithRewards(Chest chest) {
-        // This will be implemented when we add configurable chest rewards
-        // For now, we'll leave it empty as we're using command rewards
+        ConfigurationSection rewardsSection = plugin.getConfig().getConfigurationSection("rewards.chest.items");
+        if (rewardsSection == null || !plugin.getConfig().getBoolean("rewards.chest.enabled", true)) {
+            return;
+        }
+
+        // Cargar todas las recompensas posibles
+        List<ChestReward> rewards = new ArrayList<>();
+        for (String tier : rewardsSection.getKeys(false)) {
+            ConfigurationSection tierSection = rewardsSection.getConfigurationSection(tier);
+            if (tierSection != null) {
+                rewards.add(ChestReward.fromConfig(tier, tierSection));
+            }
+        }
+
+        // Generar recompensas aleatorias
+        Random random = new Random();
+        Inventory inv = chest.getInventory();
+
+        // Llenar el cofre con 5-7 items aleatorios
+        int itemCount = random.nextInt(3) + 5;
+        for (int i = 0; i < itemCount; i++) {
+            int slot = random.nextInt(27); // Cofre simple tiene 27 slots
+            if (inv.getItem(slot) == null) { // Solo si el slot está vacío
+                ItemStack reward = ChestReward.getRandomReward(rewards);
+                inv.setItem(slot, reward);
+            }
+        }
     }
+
 
     /**
      * Checks if a block is a KOTH chest

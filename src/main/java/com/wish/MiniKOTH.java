@@ -1,6 +1,7 @@
 package com.wish;
 
 import com.wish.commands.MiniKOTHCommand;
+import com.wish.listeners.KOTHListener;
 import com.wish.managers.ConfigManager;
 import com.wish.managers.KOTHManager;
 import com.wish.managers.RewardManager;
@@ -84,7 +85,7 @@ public class MiniKOTH extends JavaPlugin {
      * Registers all event listeners
      */
     private void registerEvents() {
-        // To be implemented
+        getServer().getPluginManager().registerEvents(new KOTHListener(this), this);
     }
 
     // Getter methods for managers

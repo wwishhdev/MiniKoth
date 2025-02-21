@@ -73,6 +73,45 @@ rewards:
   commands:
     - "give {player} diamond 64"
     - "eco give {player} 1000"
+  chest:
+    enabled: true
+    items:
+      common:
+        chance: 70
+        items:
+          - material: DIAMOND
+            amount: 16
+            chance: 50
+          - material: GOLDEN_APPLE
+            amount: 8
+            chance: 30
+          - material: IRON_INGOT
+            amount: 32
+            chance: 20
+      rare:
+        chance: 25
+        items:
+          - material: DIAMOND_BLOCK
+            amount: 8
+            chance: 40
+          - material: ENCHANTED_GOLDEN_APPLE
+            amount: 3
+            chance: 35
+          - material: EMERALD_BLOCK
+            amount: 16
+            chance: 25
+      legendary:
+        chance: 5
+        items:
+          - material: NETHER_STAR
+            amount: 1
+            chance: 50
+          - material: BEACON
+            amount: 1
+            chance: 30
+          - material: DRAGON_EGG
+            amount: 1
+            chance: 20
 
 schedules:
   enabled: true
