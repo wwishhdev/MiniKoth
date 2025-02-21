@@ -5,6 +5,7 @@ import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.wish.MiniKOTH;
+import com.wish.utils.MessageUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
@@ -158,6 +159,15 @@ public class KOTHManager {
                 koth.setCurrentCapturer(newCapturer);
                 capturer.sendMessage(plugin.getConfigManager().getMessage("start-capture"));
             }
+
+            // Agregar barra de progreso en ActionBar
+            double progress = 1 - ((double) koth.getRemainingTime() / koth.getCaptureTime());
+            String progressBar = MessageUtils.createProgressBar(progress, 20);
+            String timeLeft = String.format("%d:%02d",
+                    koth.getRemainingTime() / 60,
+                    koth.getRemainingTime() % 60);
+            MessageUtils.sendActionBar(capturer,
+                    "§eCaptured: " + progressBar + " §e" + timeLeft);
         } else {
             // Reset capturer if multiple players or no players
             if (koth.getCurrentCapturer() != null) {

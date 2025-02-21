@@ -10,6 +10,8 @@ import com.wish.MiniKOTH;
 import com.wish.commands.SubCommand;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import com.sk89q.worldedit.BlockVector;
+import com.sk89q.worldedit.Vector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,8 +67,8 @@ public class CreateCommand implements SubCommand {
         String regionId = "koth_" + kothName;
         ProtectedRegion region = new ProtectedCuboidRegion(
                 regionId,
-                selection.getNativeMinimumPoint(),
-                selection.getNativeMaximumPoint()
+                new BlockVector(selection.getNativeMinimumPoint()),
+                new BlockVector(selection.getNativeMaximumPoint())
         );
 
         // Add region to WorldGuard
