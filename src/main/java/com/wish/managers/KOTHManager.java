@@ -171,6 +171,24 @@ public class KOTHManager {
     }
 
     /**
+     * Removes a KOTH from the manager
+     * @param name Name of the KOTH to remove
+     * @return true if KOTH was removed successfully
+     */
+    public boolean removeKOTH(String name) {
+        KOTH koth = koths.remove(name);
+        if (koth != null) {
+            // Cancel any active timers
+            BukkitRunnable timer = activeTimers.remove(name);
+            if (timer != null) {
+                timer.cancel();
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Checks if a player is in a WorldGuard region
      *
      * @param player Player to check
@@ -246,7 +264,7 @@ public class KOTHManager {
      *
      * @param koth KOTH to save
      */
-    private void saveKOTH(KOTH koth) {
+    public void saveKOTH(KOTH koth) {
         ConfigurationSection kothsSection = plugin.getConfig().getConfigurationSection("koths");
         if (kothsSection == null) {
             kothsSection = plugin.getConfig().createSection("koths");

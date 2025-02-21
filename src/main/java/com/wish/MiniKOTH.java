@@ -1,5 +1,6 @@
 package com.wish;
 
+import com.wish.commands.MiniKOTHCommand;
 import com.wish.managers.ConfigManager;
 import com.wish.managers.KOTHManager;
 import com.wish.managers.RewardManager;
@@ -74,7 +75,9 @@ public class MiniKOTH extends JavaPlugin {
      * Registers all commands for the plugin
      */
     private void registerCommands() {
-        // To be implemented
+        MiniKOTHCommand commandExecutor = new MiniKOTHCommand(this);
+        getCommand("minikoth").setExecutor(commandExecutor);
+        getCommand("minikoth").setTabCompleter(commandExecutor);
     }
 
     /**
