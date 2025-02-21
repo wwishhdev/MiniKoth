@@ -31,30 +31,38 @@ public class MiniKOTH extends JavaPlugin {
      */
     @Override
     public void onEnable() {
-        // Set instance
-        instance = this;
+        try {
+            // Set instance
+            instance = this;
 
-        // Check dependencies
-        if (!checkDependencies()) {
+            // Check dependencies
+            if (!checkDependencies()) {
+                getServer().getPluginManager().disablePlugin(this);
+                return;
+            }
+
+            // Save default config
+            saveDefaultConfig();
+
+            // Initialize managers in correct order
+            this.configManager = new ConfigManager(this);
+            this.kothManager = new KOTHManager(this);
+            this.rewardManager = new RewardManager(this);
+            this.scheduleManager = new ScheduleManager(this);
+
+            // Register commands
+            registerCommands();
+
+            // Register events last
+            registerEvents();
+
+            // Log startup
+            getLogger().info("MiniKOTH has been enabled!");
+        } catch (Exception e) {
+            getLogger().severe("Error enabling MiniKOTH: " + e.getMessage());
+            e.printStackTrace();
             getServer().getPluginManager().disablePlugin(this);
-            return;
         }
-
-        // Save default config
-        saveDefaultConfig();
-
-        // Initialize managers
-        this.configManager = new ConfigManager(this);
-        this.kothManager = new KOTHManager(this);
-        this.rewardManager = new RewardManager(this);
-        this.scheduleManager = new ScheduleManager(this);
-
-        // Register commands and events (to be implemented)
-        registerCommands();
-        registerEvents();
-
-        // Log startup
-        getLogger().info("MiniKOTH has been enabled!");
     }
 
     /**
@@ -92,8 +100,13 @@ public class MiniKOTH extends JavaPlugin {
      * Registers all event listeners
      */
     private void registerEvents() {
-        getServer().getPluginManager().registerEvents(new KOTHListener(this), this);
-        getServer().getPluginManager().registerEvents(new ChestListener(this), this);
+        try {
+            getServer().getPluginManager().registerEvents(new KOTHListener(this), this);
+            getServer().getPluginManager().registerEvents(rewardManager.getChestListener(), this);
+        } catch (Exception e) {
+            getLogger().severe("Error registering events: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     /**

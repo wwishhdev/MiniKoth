@@ -26,7 +26,6 @@ public class RewardManager {
     public RewardManager(MiniKOTH plugin) {
         this.plugin = plugin;
         this.chestListener = new ChestListener(plugin);
-        plugin.getServer().getPluginManager().registerEvents(chestListener, plugin);
     }
 
     /**
@@ -122,5 +121,13 @@ public class RewardManager {
      */
     public java.util.List<String> listRewardCommands() {
         return plugin.getConfigManager().getRewardCommands();
+    }
+
+    /**
+     * Gets the chest listener instance
+     * @return ChestListener instance
+     */
+    public ChestListener getChestListener() {
+        return chestListener;
     }
 }
