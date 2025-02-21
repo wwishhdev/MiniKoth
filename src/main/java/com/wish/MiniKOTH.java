@@ -11,8 +11,8 @@ import org.bukkit.plugin.java.JavaPlugin;
  * This is the main class of the MiniKOTH plugin that handles all core functionality
  * including initialization of managers and event listeners.
  *
- * @author wish
- * @version 1.0
+ * @author wwishh
+ * @version 0.0.1
  */
 public class MiniKOTH extends JavaPlugin {
 
