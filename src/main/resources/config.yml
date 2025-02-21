@@ -68,6 +68,14 @@ messages:
   koth-stopped-manual: "&aKOTH {name} has been manually stopped!"
   start-failed: "&cFailed to start KOTH. Please try again."
   reload-success: "&aPlugin configuration has been reloaded successfully!"
+  error:
+    koth-creation: "&cError creating KOTH: {error}"
+    koth-save: "&cError saving KOTH data: {error}"
+    region-load: "&cError loading WorldGuard region: {error}"
+    chest-spawn: "&cError spawning reward chest: {error}"
+    invalid-world: "&cError: World '{world}' not found"
+    worldguard-error: "&cError with WorldGuard integration: {error}"
+    worldedit-error: "&cError with WorldEdit integration: {error}"
 
 rewards:
   commands:

@@ -42,6 +42,11 @@ public class CreateCommand implements SubCommand {
             return true;
         }
 
+        if (!sender.hasPermission("minikoth.create")) {
+            sender.sendMessage(plugin.getConfigManager().getMessage("no-permission"));
+            return true;
+        }
+
         Player player = (Player) sender;
         String kothName = args[1].toLowerCase();
 

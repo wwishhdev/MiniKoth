@@ -1,6 +1,7 @@
 package com.wish;
 
 import com.wish.commands.MiniKOTHCommand;
+import com.wish.listeners.ChestListener;
 import com.wish.listeners.KOTHListener;
 import com.wish.managers.ConfigManager;
 import com.wish.managers.KOTHManager;
@@ -32,6 +33,12 @@ public class MiniKOTH extends JavaPlugin {
     public void onEnable() {
         // Set instance
         instance = this;
+
+        // Check dependencies
+        if (!checkDependencies()) {
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
 
         // Save default config
         saveDefaultConfig();
@@ -86,6 +93,33 @@ public class MiniKOTH extends JavaPlugin {
      */
     private void registerEvents() {
         getServer().getPluginManager().registerEvents(new KOTHListener(this), this);
+        getServer().getPluginManager().registerEvents(new ChestListener(this), this);
+    }
+
+    /**
+     * Verifies that all required dependencies are present
+     * @return true if all dependencies are loaded
+     */
+    private boolean checkDependencies() {
+        try {
+            // Check WorldGuard
+            if (getServer().getPluginManager().getPlugin("WorldGuard") == null) {
+                getLogger().severe("WorldGuard not found! Disabling plugin...");
+                return false;
+            }
+
+            // Check WorldEdit
+            if (getServer().getPluginManager().getPlugin("WorldEdit") == null) {
+                getLogger().severe("WorldEdit not found! Disabling plugin...");
+                return false;
+            }
+
+            return true;
+        } catch (Exception e) {
+            getLogger().severe("Error checking dependencies: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
     }
 
     // Getter methods for managers

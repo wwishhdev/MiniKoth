@@ -49,14 +49,20 @@ public class KOTHManager {
      * @return true if creation was successful
      */
     public boolean createKOTH(String name, ProtectedRegion region, Location chestSpawnLocation) {
-        if (koths.containsKey(name)) {
+        try {
+            if (koths.containsKey(name)) {
+                return false;
+            }
+
+            KOTH koth = new KOTH(name, region, chestSpawnLocation);
+            koths.put(name, koth);
+            saveKOTH(koth);
+            return true;
+        } catch (Exception e) {
+            plugin.getLogger().severe("Error creating KOTH " + name + ": " + e.getMessage());
+            e.printStackTrace();
             return false;
         }
-
-        KOTH koth = new KOTH(name, region, chestSpawnLocation);
-        koths.put(name, koth);
-        saveKOTH(koth);
-        return true;
     }
 
     /**
@@ -275,14 +281,19 @@ public class KOTHManager {
      * @param koth KOTH to save
      */
     public void saveKOTH(KOTH koth) {
-        ConfigurationSection kothsSection = plugin.getConfig().getConfigurationSection("koths");
-        if (kothsSection == null) {
-            kothsSection = plugin.getConfig().createSection("koths");
-        }
+        try {
+            ConfigurationSection kothsSection = plugin.getConfig().getConfigurationSection("koths");
+            if (kothsSection == null) {
+                kothsSection = plugin.getConfig().createSection("koths");
+            }
 
-        ConfigurationSection kothSection = kothsSection.createSection(koth.getName());
-        koth.saveToConfig(kothSection);
-        plugin.saveConfig();
+            ConfigurationSection kothSection = kothsSection.createSection(koth.getName());
+            koth.saveToConfig(kothSection);
+            plugin.saveConfig();
+        } catch (Exception e) {
+            plugin.getLogger().severe("Error saving KOTH " + koth.getName() + ": " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     /**
