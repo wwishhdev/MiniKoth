@@ -67,6 +67,7 @@ messages:
   koth-started-manual: "&aKOTH {name} has been manually started!"
   koth-stopped-manual: "&aKOTH {name} has been manually stopped!"
   start-failed: "&cFailed to start KOTH. Please try again."
+  reload-success: "&aPlugin configuration has been reloaded successfully!"
 
 rewards:
   commands:

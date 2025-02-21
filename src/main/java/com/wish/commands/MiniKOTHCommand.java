@@ -1,6 +1,7 @@
 package com.wish.commands;
 
 import com.wish.MiniKOTH;
+import com.wish.commands.subcommands.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
