@@ -1,0 +1,33 @@
+# MiniKOTH Configuration File
+# Configure all aspects of the KOTH system here
+
+settings:
+  capture-time: 300 # Time in seconds to capture
+  message-interval: 30 # Interval for remaining time messages
+  prefix: "&8[&bMiniKOTH&8]"
+  chest-despawn-time: 300 # Time in seconds before chest despawns after capture
+
+messages:
+  start-capture: "&aYou started capturing the KOTH!"
+  leave-capture: "&cYou left the KOTH area!"
+  cannot-open: "&cOnly the KOTH winner can open this chest!"
+  time-remaining: "&eTime remaining: {time}"
+  koth-captured: "&a{player} has captured the KOTH!"
+  koth-started: "&bThe KOTH {name} has started!"
+  koth-ended: "&bThe KOTH {name} has ended!"
+  chest-spawned: "&aA reward chest has spawned at the KOTH!"
+
+rewards:
+  commands:
+    - "give {player} diamond 64"
+    - "eco give {player} 1000"
+
+schedules:
+  enabled: true
+  timezone: "America/Argentina/Buenos_Aires"
+  times:
+    - "14:00"
+    - "20:00"
+    - "22:00"
+
+koths: {}  # This section will store KOTH data

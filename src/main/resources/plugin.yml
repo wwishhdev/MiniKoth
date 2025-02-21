@@ -1,0 +1,11 @@
+name: MiniKOTH
+version: '0.0.1'
+main: com.wish.MiniKOTH
+author: wwishh
+description: A simple MiniKOTH plugin with chest rewards
+depend: [WorldEdit, WorldGuard]
+commands:
+  minikoth:
+    description: Main command for MiniKOTH plugin
+    aliases: [mkoth]
+    usage: /<command> [subcommand]
